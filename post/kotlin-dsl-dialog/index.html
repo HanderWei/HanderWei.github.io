@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>Kotlin实践：自定义DSL - Hander&#39;s Blog - Android Programmer, Photographer and Movies Fan</title>
+  <meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+<meta name="author" content="Hander" />
+  <meta name="description" content="Kotlin语言最显著的特点就是简洁，Kotlin中的诸多语言特性都是为了精简代码同时保证代码具有更高的可读性。通过合理的组合这些语言特性实" />
+
+  <meta name="keywords" content="Android, Photography, Movie" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.48" />
+
+
+<link rel="canonical" href="https://HanderWei.github.io/post/kotlin-dsl-dialog/" />
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+
+
+
+
+
+
+
+<link href="/dist/even.min.css?v=3.2.0" rel="stylesheet">
+<link href="/lib/fancybox/jquery.fancybox-3.1.20.min.css" rel="stylesheet">
+
+
+
+
+<meta property="og:title" content="Kotlin实践：自定义DSL" />
+<meta property="og:description" content="Kotlin语言最显著的特点就是简洁，Kotlin中的诸多语言特性都是为了精简代码同时保证代码具有更高的可读性。通过合理的组合这些语言特性实" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://HanderWei.github.io/post/kotlin-dsl-dialog/" /><meta property="article:published_time" content="2018-09-11T21:36:55&#43;08:00"/>
+<meta property="article:modified_time" content="2018-09-11T21:36:55&#43;08:00"/>
+<meta itemprop="name" content="Kotlin实践：自定义DSL">
+<meta itemprop="description" content="Kotlin语言最显著的特点就是简洁，Kotlin中的诸多语言特性都是为了精简代码同时保证代码具有更高的可读性。通过合理的组合这些语言特性实">
+
+
+<meta itemprop="datePublished" content="2018-09-11T21:36:55&#43;08:00" />
+<meta itemprop="dateModified" content="2018-09-11T21:36:55&#43;08:00" />
+<meta itemprop="wordCount" content="1494">
+
+
+
+<meta itemprop="keywords" content="" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Kotlin实践：自定义DSL"/>
+<meta name="twitter:description" content="Kotlin语言最显著的特点就是简洁，Kotlin中的诸多语言特性都是为了精简代码同时保证代码具有更高的可读性。通过合理的组合这些语言特性实"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Hander&#39;s Blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <a href="/">
+        <li class="mobile-menu-item">Home</li>
+      </a><a href="/post/">
+        <li class="mobile-menu-item">Archives</li>
+      </a><a href="/tags/">
+        <li class="mobile-menu-item">Tags</li>
+      </a><a href="/categories/">
+        <li class="mobile-menu-item">Categories</li>
+      </a>
+  </ul>
+</nav>
+  <div class="container" id="mobile-panel">
+    <header id="header" class="header">
+        <div class="logo-wrapper">
+  <a href="/" class="logo">Hander&#39;s Blog</a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    <li class="menu-item">
+        <a class="menu-item-link" href="/">Home</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/post/">Archives</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/tags/">Tags</a>
+      </li><li class="menu-item">
+        <a class="menu-item-link" href="/categories/">Categories</a>
+      </li>
+  </ul>
+</nav>
+    </header>
+
+    <main id="main" class="main">
+      <div class="content-wrapper">
+        <div id="content" class="content">
+          <article class="post">
+    
+    <header class="post-header">
+      <h1 class="post-title">Kotlin实践：自定义DSL</h1>
+
+      <div class="post-meta">
+        <span class="post-time"> 2018-09-11 </span>
+        
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">文章目录</h2>
+  
+  <div class="post-toc-content always-active">
+    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#什么是dsl">什么是DSL？</a></li>
+<li><a href="#为什么要用kotlin构造dsl">为什么要用Kotlin构造DSL？</a></li>
+<li><a href="#dsl简化dialog样板代码">DSL简化Dialog样板代码</a>
+<ul>
+<li><a href="#使用dsl前">使用DSL前</a></li>
+<li><a href="#使用dsl后">使用DSL后</a></li>
+<li><a href="#如何实现">如何实现？</a>
+<ul>
+<li><a href="#1-扩展函数">1. 扩展函数</a></li>
+<li><a href="#2-带接收者的函数参数">2. 带接收者的函数参数</a></li>
+<li><a href="#3-默认参数">3. 默认参数</a></li>
+<li><a href="#源码">源码</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#收尾">收尾</a></li>
+<li><a href="#参考文献">参考文献</a></li>
+</ul></li>
+</ul>
+</nav>
+  </div>
+</div>
+
+    
+    
+
+    
+    <div class="post-content">
+      
+
+<blockquote>
+<p>Kotlin语言最显著的特点就是<code>简洁</code>，Kotlin中的诸多语言特性都是为了精简代码同时保证代码具有更高的可读性。通过合理的组合这些语言特性实现DSL则可以将这种简洁性发挥到极致。</p>
+</blockquote>
+
+<p>本文以封装Dialog为例，简述如何构造项目内部DSL。</p>
+
+<h2 id="什么是dsl">什么是DSL？</h2>
+
+<p>DSL是Domain-specific language(领域特定语言)的缩写，维基百科的定义是*指的是专注于某个应用程序领域的计算机语言*。</p>
+
+<p>其实我们熟悉的SQL就是一种领域特定语言，与编程语言相比，SQL语句更接近口语，这也就使得SQL具有更强的<code>表达能力</code>和<code>可读性</code>。</p>
+
+<p>与一般API不同的是，DSL提供了一种特殊的语法结构，其目的也就是为了让代码更易于理解。</p>
+
+<p>DSL:</p>
+
+<ol>
+<li>简洁</li>
+<li>可读性强</li>
+<li>具有特殊的语法结构</li>
+<li>应用于特定领域</li>
+</ol>
+
+<h2 id="为什么要用kotlin构造dsl">为什么要用Kotlin构造DSL？</h2>
+
+<p>如果说构造DSL的目的是为了增强可读性，简化代码，那么为什么一定要选择Kotlin呢？Java语言就无法构造DSL了吗？</p>
+
+<p>其实在Android领域就有很多库提供了类DSL的接口，譬如Picasso：</p>
+
+<pre><code class="language-Java">Picasso.get()
+  .load(url)
+  .resize(50, 50)
+  .centerCrop()
+  .into(imageView)
+</code></pre>
+
+<p>从某种意义上将，Picasso的接口复合DSL定义，但是以Java现有的语言特性来说，其在构造DSL方面没有太多的发挥空间。</p>
+
+<p>而在Kotlin的世界中，有诸多的语言特性可以用于构造更为简洁明晰的DSL：</p>
+
+<ul>
+<li>扩展函数</li>
+<li>默认参数</li>
+<li>中缀表达式</li>
+<li>Lambda表达式</li>
+<li>函数参数</li>
+<li>带接收者的函数参数</li>
+<li>&hellip; &hellip;</li>
+</ul>
+
+<p>说了这么多，还是以实际的例子讲解一下如何实现具体的DSL吧。</p>
+
+<h2 id="dsl简化dialog样板代码">DSL简化Dialog样板代码</h2>
+
+<p>先定义一个<code>CustomDialogFragment</code>，实现了项目中规定的Dialog样式，并提供相应的接口用于设置Title，Message，LeftButton和RightButton。</p>
+
+<h3 id="使用dsl前">使用DSL前</h3>
+
+<pre><code class="language-Kotlin">val dialogFragment = CustomDialogFragment.newInstance()
+dialogFragment.title = &quot;title&quot;
+dialogFragment.message = &quot;message&quot;
+dialogFragment.rightClicks(key = &quot;确定&quot;, dismissAfterClick = true) {
+    toast(&quot;clicked!&quot;)
+}
+val ft = supportFragmentManager.beginTransaction()
+val prev = supportFragmentManager.findFragmentByTag(&quot;dialog&quot;)
+if (prev != null) {
+    ft.remove(prev)
+}
+ft.addToBackStack(null)
+dialogFragment.show(ft, &quot;dialog&quot;)
+</code></pre>
+
+<h3 id="使用dsl后">使用DSL后</h3>
+
+<pre><code class="language-Kotlin">showDialog {
+    title = &quot;title&quot;
+    message = &quot;message&quot;
+    rightClicks {
+        toast(&quot;clicked!&quot;)
+    }
+}
+</code></pre>
+
+<ol>
+<li>省略了大量样板代码，保证了代码的<code>简洁性</code></li>
+<li>语义清晰，具有极强的<code>可读性</code></li>
+<li>语法结构与一般API不同</li>
+<li>应用于Android项目中的Dialog展示</li>
+</ol>
+
+<h3 id="如何实现">如何实现？</h3>
+
+<h4 id="1-扩展函数">1. 扩展函数</h4>
+
+<pre><code class="language-Kotlin">inline fun AppCompatActivity.showDialog(settings: CustomDialogFragment.() -&gt; Unit) : CustomDialogFragment {
+    val dialog = CustomDialogFragment.newInstance()
+    dialog.apply(settings)
+    val ft = this.supportFragmentManager.beginTransaction()
+    val prev = this.supportFragmentManager.findFragmentByTag(&quot;dialog&quot;)
+    if (prev != null) {
+        ft.remove(prev)
+    }
+    ft.addToBackStack(null)
+    dialog.show(ft, &quot;dialog&quot;)
+    return dialog
+}
+</code></pre>
+
+<p><code>AppCompatActivity</code>增加 <strong>showDialog( )</strong> 扩展函数，这样就可以直接在Activity中调用showDialog( )方法展示Dialog了。</p>
+
+<h4 id="2-带接收者的函数参数">2. 带接收者的函数参数</h4>
+
+<p>showDialog( )方法中只有唯一的参数settings，其类型是<code>CustomDialogFragment.() -&gt; Unit</code>，即带有CustomDialogFragment参数类型的函数。</p>
+
+<p>在showDialog( )方法内部，构造了CustomDialogFragment对象，并调用<code>dialog.apply(settings)</code>方法，其作用即在构造Dialog对象后，对Dialog进行设置。在实际调用showDialog( )方法时，就可以持有该CustomDialogFragment对象，然后调用CustomDialogFragment提供的public接口配置Dialog。</p>
+
+<h4 id="3-默认参数">3. 默认参数</h4>
+
+<pre><code class="language-Kotlin">fun leftClicks(key: String = &quot;取消&quot;, dismissAfterClick: Boolean = true, callback: () -&gt; Unit) {
+    leftKey = key
+    leftButtonDismissAfterClick = dismissAfterClick
+    leftClicks = callback
+}
+</code></pre>
+
+<p>在CustomDialogFragment提供的接口中，对一些变化不大的参数设置默认值，由于Kotlin语言支持默认参数，无需编写大量的重载方法。</p>
+
+<h4 id="源码">源码</h4>
+
+<p>Github: <a href="https://github.com/HanderWei/android-dialog-dsl-sample">HanderWei/android-dialog-dsl-sample</a></p>
+
+<h2 id="收尾">收尾</h2>
+
+<blockquote>
+<p>在Android项目中，除了Dialog之外还有很多场景需要编写大量样板代码，打造属于自己的DSL，可以帮助整个团队简化开发流程。</p>
+</blockquote>
+
+<p>文中表述有误的地方希望评论指出。</p>
+
+<h2 id="参考文献">参考文献</h2>
+
+<ul>
+<li><a href="https://kotlinlang.org/docs/reference/lambdas.html">Higher-Order Functions and Lambdas - Kotlin Programming Language</a></li>
+<li><a href="https://kotlinexpertise.com/java-builders-kotlin-dsls/">From Java Builders to Kotlin DSLs - Kotlin Expertise Blog</a></li>
+</ul>
+
+    </div>
+
+    
+    <div class="post-copyright">
+  <p class="copyright-item">
+    <span class="item-title">文章作者</span>
+    <span class="item-content">Hander</span>
+  </p>
+  <p class="copyright-item">
+    <span class="item-title">上次更新</span>
+    <span class="item-content">2018-09-11</span>
+  </p>
+  
+  
+</div>
+
+    
+    
+<div class="post-reward">
+  <input type="checkbox" name="reward" id="reward" hidden />
+  <label class="reward-button" for="reward">赞赏支持</label>
+  <div class="qr-code">
+    
+    
+      <label class="qr-code-image" for="reward">
+        <img class="image" src="/img/wechat-qr-code.png">
+        <span>微信打赏</span>
+      </label>
+    
+      <label class="qr-code-image" for="reward">
+        <img class="image" src="/img/alipay-qr-code.png">
+        <span>支付宝打赏</span>
+      </label>
+  </div>
+</div>
+
+    <footer class="post-footer">
+      
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/build-cool-keynote/">
+            <span class="next-text nav-default">如何制作酷炫的技术分享Keynote(PPT)？</span>
+            <span class="next-text nav-mobile">下一篇</span>
+            <i class="iconfont icon-right"></i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+        </div>
+        
+  
+
+  
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="social-links">
+      <a href="mailto:hander_wei@163.com" class="iconfont icon-email" title="email"></a>
+      <a href="https://stackoverflow.com/users/4470672/user4470672" class="iconfont icon-stack-overflow" title="stack-overflow"></a>
+      <a href="https://github.com/HanderWei" class="iconfont icon-github" title="github"></a>
+      <a href="https://www.zhihu.com/people/hander-88/activities" class="iconfont icon-zhihu" title="zhihu"></a>
+      <a href="https://www.douban.com/people/132654299/" class="iconfont icon-douban" title="douban"></a>
+  <a href="https://HanderWei.github.io/index.xml" type="application/rss+xml" class="iconfont icon-rss" title="rss"></a>
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://gohugo.io">Hugo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/olOwOlo/hugo-theme-even">Even</a>
+  </span>
+
+  
+
+  <span class="copyright-year">
+    &copy; 
+    
+      2017 - 
+    2018
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">Hander</span>
+  </span>
+</div>
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont icon-up"></i>
+    </div>
+  </div>
+  
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script><script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+  <script type="text/javascript" src="/lib/fancybox/jquery.fancybox-3.1.20.min.js"></script>
+
+
+<script type="text/javascript" src="/dist/even.min.js?v=3.2.0"></script>
+
+
+
+
+
+
+
+
+</body>
+</html>
