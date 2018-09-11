@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kotlin on Hander&#39;s Blog - Android Programmer, Photographer and Movies Fan</title>
+    <link>https://HanderWei.github.io/tags/kotlin/</link>
+    <description>Recent content in Kotlin on Hander&#39;s Blog - Android Programmer, Photographer and Movies Fan</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 11 Sep 2018 21:36:55 +0800</lastBuildDate>
+    
+	<atom:link href="https://HanderWei.github.io/tags/kotlin/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Kotlin实践：自定义DSL</title>
+      <link>https://HanderWei.github.io/post/kotlin-dsl-dialog/</link>
+      <pubDate>Tue, 11 Sep 2018 21:36:55 +0800</pubDate>
+      
+      <guid>https://HanderWei.github.io/post/kotlin-dsl-dialog/</guid>
+      <description>Kotlin语言最显著的特点就是简洁，Kotlin中的诸多语言特性都是为了精简代码同时保证代码具有更高的可读性。通过合理的组合这些语言特性实</description>
+    </item>
+    
+  </channel>
+</rss>

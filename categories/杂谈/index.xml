@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>杂谈 on Hander&#39;s Blog - Android Programmer, Photographer and Movies Fan</title>
+    <link>https://HanderWei.github.io/categories/%E6%9D%82%E8%B0%88/</link>
+    <description>Recent content in 杂谈 on Hander&#39;s Blog - Android Programmer, Photographer and Movies Fan</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 31 Aug 2018 23:57:10 +0800</lastBuildDate>
+    
+	<atom:link href="https://HanderWei.github.io/categories/%E6%9D%82%E8%B0%88/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>如何制作酷炫的技术分享Keynote(PPT)？</title>
+      <link>https://HanderWei.github.io/post/build-cool-keynote/</link>
+      <pubDate>Fri, 31 Aug 2018 23:57:10 +0800</pubDate>
+      
+      <guid>https://HanderWei.github.io/post/build-cool-keynote/</guid>
+      <description>作为一个程序猿/媛，想必大家都参与过大大小小各式各样的技术分享，异或在不同的场合分享自己的技术心得。抛开分享内容的质量不谈，笔者发现通常这些</description>
+    </item>
+    
+  </channel>
+</rss>
